@@ -14,6 +14,7 @@ BuildArch:	noarch
 %if %{!?notmdk:1}%{?notmdk:0}
 Requires(pre):	rpm-helper
 %endif
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Devmon is a device monitoring script which works in tandem with the
