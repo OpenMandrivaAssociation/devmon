@@ -1,20 +1,23 @@
 %{!?mdkversion:%define notmdk}
+%{!?_logdir:%global _logdir %{_var}/log}
+%define beta rc1
 %define		_localstatedir	%{_var}/lib
 
 Name:		devmon
-Version:	0.2.2
-Release:	%mkrel 2
+Version:	0.3.0
+Release:	%mkrel 0%{?beta:.%beta.}
 Summary:	SNMP Device Monitoring for Hobbit/BigBrother
 License:	GPL
 Group:		Monitoring
 URL:		http://devmon.sf.net
-Source:		http://prdownloads.sourceforge.net/devmon/devmon-0.2.2.tar.bz2
+Source:		http://prdownloads.sourceforge.net/devmon/devmon-%{version}%{?beta:-%beta}.tar.gz
 Patch:		devmon-correct-paths.patch
 BuildArch:	noarch
 %if %{!?notmdk:1}%{?notmdk:0}
 Requires(pre):	rpm-helper
 %endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Requires:	devmon-templates >= 20080206
 
 %description
 Devmon is a device monitoring script which works in tandem with the
@@ -23,7 +26,7 @@ user-defined logic and thresholds to the acquired data, and submits status and
 alarms to a display server.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{version}%{?beta:-%beta}
 %patch -p1 -b .mdv
 
 %build
@@ -35,7 +38,7 @@ install -d %{buildroot}/%{_sysconfdir}/logrotate.d %{buildroot}/%{_initrddir}
 install -d %{buildroot}/%{_localstatedir}/%{name} %{buildroot}/%{_var}/run/%{name}
 install -d %{buildroot}/%{_logdir}/%{name}
 install -d %{buildroot}/%{_localstatedir}/%{name}
-cp -a modules templates %{buildroot}/%{_datadir}/%{name}
+cp -a modules %{buildroot}/%{_datadir}/%{name}
 install -m755 devmon %{buildroot}/%{_datadir}/%{name}
 install -m 640 devmon.cfg %{buildroot}/%{_sysconfdir}
 install -m 755 extras/devmon.initd.redhat %{buildroot}/%{_initrddir}/devmon
