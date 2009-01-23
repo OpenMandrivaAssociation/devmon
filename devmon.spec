@@ -1,11 +1,11 @@
 %{!?mdkversion:%define notmdk}
 %{!?_logdir:%global _logdir %{_var}/log}
-#define beta rc1
+%define beta beta1
 %define		_localstatedir	%{_var}/lib
 
 Name:		devmon
-Version:	0.3.0
-Release:	%mkrel 1%{?beta:.%beta.}
+Version:	0.3.1
+Release:	%mkrel 0%{?beta:.%beta.}
 Summary:	SNMP Device Monitoring for Hobbit/BigBrother
 License:	GPL
 Group:		Monitoring
