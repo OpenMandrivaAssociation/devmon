@@ -2,10 +2,15 @@
 %{!?_logdir:%global _logdir %{_var}/log}
 %define beta beta1
 %define		_localstatedir	%{_var}/lib
+%define rel 1
 
 Name:		devmon
 Version:	0.3.1
-Release:	%mkrel 0%{?beta:.%beta.}
+%if %{?beta:1}%{!?beta:0}
+Release:	%mkrel -c %beta %rel
+%else
+Release:	%mkrel %rel
+%endif
 Summary:	SNMP Device Monitoring for Hobbit/BigBrother
 License:	GPL
 Group:		Monitoring
@@ -78,4 +83,4 @@ rm -Rf %{buildroot}
 %attr(755,devmon,devmon) %dir %{_var}/run/%{name}
 %attr(755,devmon,devmon) %dir %{_localstatedir}/%{name}
 
-%doc docs/* README CHANGELOG extras/devmon.db
+%doc docs/* README CHANGELOG extras/devmon.db extras/devmon-graph.cfg
