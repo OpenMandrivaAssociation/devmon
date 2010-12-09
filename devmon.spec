@@ -2,7 +2,7 @@
 %{!?_logdir:%global _logdir %{_var}/log}
 %define beta beta1
 %define		_localstatedir	%{_var}/lib
-%define rel 1
+%define rel 2
 
 Name:		devmon
 Version:	0.3.1
