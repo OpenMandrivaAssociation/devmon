@@ -1,0 +1,85 @@
+diff -p -up devmon-0.3.1-beta1/extras/devmon.initd.redhat.mdv devmon-0.3.1-beta1/extras/devmon.initd.redhat
+--- devmon-0.3.1-beta1/extras/devmon.initd.redhat.mdv	2009-01-22 18:42:07.000000000 +0200
++++ devmon-0.3.1-beta1/extras/devmon.initd.redhat	2009-01-23 18:17:52.000000000 +0200
+@@ -5,7 +5,7 @@
+ #              monitoring suites
+ # processname: devmon
+ # pidfile: /var/run/devmon/devmon.pid
+-# config: /usr/local/devmon/devmon.cfg
++# config: /usr/share/devmon/devmon.cfg
+ 
+ # source function library
+ . /etc/init.d/functions
+@@ -14,10 +14,10 @@ RETVAL=0
+ PIDFILE=/var/run/devmon/devmon.pid
+ KILLDELAY=5
+ ARGS=""
+-#RUNASUSER=devmon
++RUNASUSER=devmon
+ [ -e /etc/sysconfig/devmon ] && . /etc/sysconfig/devmon
+ 
+-prog="/usr/local/devmon/devmon"
++prog="/usr/share/devmon/devmon"
+ if [ -e ~hobbit/client/bin/bbcmd ]
+ then prog="~hobbit/client/bin/bbcmd $prog"
+ elif [ -e ~xymon/client/bin/bbcmd ]
+diff -p -up devmon-0.3.1-beta1/modules/dm_config.pm.mdv devmon-0.3.1-beta1/modules/dm_config.pm
+--- devmon-0.3.1-beta1/modules/dm_config.pm.mdv	2009-01-23 17:41:27.000000000 +0200
++++ devmon-0.3.1-beta1/modules/dm_config.pm	2009-01-23 18:25:30.000000000 +0200
+@@ -40,8 +40,8 @@ require Exporter;
+      # General variables
+       'version'       => $_[0], # set in main script now
+       'homedir'       => $FindBin::Bin,
+-      'configfile'    => "$FindBin::Bin/devmon.cfg",
+-      'dbfile'        => "$FindBin::Bin/hosts.db",
++      'configfile'    => "/etc/devmon.cfg",
++      'dbfile'        => "/var/lib/devmon/hosts.db",
+       'daemonize'     => 1,
+       'initialized'   => 0,
+       'mypid'         => 0,
+@@ -121,7 +121,7 @@ require Exporter;
+                        'regex'   => 'yes|no',
+                        'set'     => 0,
+                        'case'    => 0 },
+-      'bbhosts'   => { 'default' => (defined $ENV{'BBHOSTS'} and $ENV{'BBHOSTS'} ne '') ? $ENV{'BBHOSTS'} : '/home/hobbit/server/etc/bb-hosts',
++      'bbhosts'   => { 'default' => (defined $ENV{'BBHOSTS'} and $ENV{'BBHOSTS'} ne '') ? $ENV{'BBHOSTS'} : '/etc/hobbit/bb-hosts',
+                        'regex'   => '.+',
+                        'set'     => 0,
+                        'case'    => 1 },
+@@ -141,11 +141,11 @@ require Exporter;
+                        'regex'   => '[\w\.-]+',
+                        'set'     => 0,
+                        'case'    => 1 },
+-      'pidfile'   => { 'default' => '/var/run/devmon.pid',
++      'pidfile'   => { 'default' => '/var/run/devmon/devmon.pid',
+                        'regex'   => '.+',
+                        'set'     => 0,
+                        'case'    => 1 },
+-      'logfile'   => { 'default' => '/var/log/devmon.log',
++      'logfile'   => { 'default' => '/var/log/devmon/devmon.log',
+ 		       'regex'   => '.*',
+                        'set'     => 0,
+                        'case'    => 1 },
+diff -p -up devmon-0.3.1-beta1/devmon.cfg.mdv devmon-0.3.1-beta1/devmon.cfg
+--- devmon-0.3.1-beta1/devmon.cfg.mdv	2009-01-22 18:42:29.000000000 +0200
++++ devmon-0.3.1-beta1/devmon.cfg	2009-01-23 18:17:52.000000000 +0200
+@@ -21,7 +21,7 @@ MULTINODE=NO
+ # the display server is running on;  other systems can leave this at default.
+ # (case sensitive) [DEFAULT: /home/hobbit/server/etc/bb-hosts or
+ # BBHOSTS environment variable set]
+-#BBHOSTS=/home/hobbit/server/etc/bb-hosts
++#BBHOSTS=/etc/hobbit/bb-hosts
+ 
+ # BBTAG:  This is the indentifier (aka tag) that you use in your bb-hosts
+ # which allows Devmon to determine which of the options after a host
+@@ -51,8 +51,8 @@ PIDFILE=/var/run/devmon/devmon.pid
+ # exist and be writable by the Devmon user, or the Devmon user should have 
+ # read/write privileges to the log directory (case sensitive)
+ # To disable logging to a file, leave this value blank (i.e. 'LOGFILE=')
+-# [DEFAULT: /var/log/devmon.log]
+-LOGFILE=/var/log/devmon.log
++# [DEFAULT: /var/log/devmon/devmon.log]
++LOGFILE=/var/log/devmon/devmon.log
+ 
+ # DBHOST: Should contain the IP or DNS name of the database server
+ # in a multinode cluster. [DEFAULT: localhost]
