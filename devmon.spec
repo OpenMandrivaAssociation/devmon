@@ -84,3 +84,42 @@ rm -Rf %{buildroot}
 %attr(755,devmon,devmon) %dir %{_localstatedir}/%{name}
 
 %doc docs/* README CHANGELOG extras/devmon.db extras/devmon-graph.cfg
+
+
+%changelog
+* Thu Dec 09 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3.1-0.beta1.2mdv2011.0
++ Revision: 617574
+- the mass rebuild of 2010.0 packages
+
+* Mon Oct 12 2009 Buchan Milne <bgmilne@mandriva.org> 0.3.1-0.beta1.1mdv2010.0
++ Revision: 456796
+- Ship graph-devmon.cfg for xymon in docs
+
+* Fri Jan 23 2009 Buchan Milne <bgmilne@mandriva.org> 0.3.1-0.beta1.mdv2009.1
++ Revision: 333052
+- New version 0.3.1-beta1
+- Re-diff as most changes are now upstream
+
+* Thu Apr 03 2008 Buchan Milne <bgmilne@mandriva.org> 0.3.0-1mdv2008.1
++ Revision: 192222
+- 0.3.0 Final
+
+* Wed Feb 06 2008 Buchan Milne <bgmilne@mandriva.org> 0.3.0-0.rc1.mdv2008.1
++ Revision: 163087
+- New version 0.3.0-rc1
+- Split templates off (following upstream)
+- Import devmon
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+
+* Thu Oct 19 2006 Buchan Milne <bgmilne@mandriva.org> 0.2.2-2mdv2007.0
+- fix permissions, default paths, init script
+
+* Sat Jul 15 2006 Buchan Milne <bgmilne@mandriva.org> 0.2.2-1mdv2007.0
+-  First Mandriva package
