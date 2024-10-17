@@ -6,7 +6,7 @@ Version:	0.3.1
 Release:	0.%{beta}.3
 License:	GPLv2+
 Group:		Monitoring
-Url:		http://devmon.sf.net
+Url:		https://devmon.sf.net
 Source0:	http://prdownloads.sourceforge.net/devmon/devmon-%{version}%{?beta:-%beta}.tar.gz
 Patch0:		devmon-correct-paths.patch
 Requires:	devmon-templates
